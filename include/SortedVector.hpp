@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <fmt/core.hpp>
 #include <initializer_list>
 #include <numeric>
 #include <utility>
@@ -50,8 +51,14 @@ public:
 		return m_vector.cend();
 	}
 
+	[[nodiscard]] T& operator[](std::size_t index) noexcept { return m_vector[index]; }
+	[[nodiscard]] const T& operator[](std::size_t index) const noexcept { return m_vector[index]; }
+
 	// Modifiers
 	void push(const T& val) noexcept { m_vector.insert(push_iter(val), val); }
+
+	constexpr void pop() noexcept { m_vector.pop_back(); }
+	constexpr void pop(std::size_t index) noexcept { m_vector.erase(index); }
 
 private:
 	std::vector<T> m_vector {};
@@ -59,25 +66,11 @@ private:
 	constexpr void sort() noexcept { std::sort(m_vector.begin(), m_vector.end()); }
 	constexpr typename std::vector<T>::const_iterator push_iter(const T& val) const noexcept
 	{
-		auto pivot = std::next(m_vector.cbegin(), m_vector.size() / 2ULL);
-		// How to make this loop?
-		while(val < *pivot)
-		{
-			const auto dist = std::distance(m_vector.cbegin(), pivot);
-			if(dist == 1)
-				break;
-			pivot = std::next(m_vector.cbegin(), dist);
-		}
+		for(std::size_t i = 0ULL; i < m_vector.size(); ++i)
+			if(val < m_vector[i])
+				return m_vector.cbegin() + i;
 
-		while(*pivot < val)
-		{
-			const auto dist = std::distance(pivot, m_vector.cend());
-			if(dist == 1)
-				break;
-			pivot = std::next(pivot, dist);
-		}
-
-		return pivot;
+		return m_vector.cend();
 	}
 };
 }	 // namespace OK

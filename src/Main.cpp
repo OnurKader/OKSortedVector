@@ -30,10 +30,30 @@ int main()
 		fmt::print("Orig. after   : {}\n", _.vector());
 	}
 	{
-		OK::SortedVector<int> sv {-2, 4, 2, 3, -2, 5, 69, 0};
+		OK::SortedVector<int> sv {-2, 4, 2, 3, -2, 5, 69, 0, 1, -99};
+		fmt::print("push()        : {}\n", sv.vector());
 		sv.push(420);
 		sv.push(-420);
+		sv.push(69);
+		sv.push(-7);
+		sv.push(-69);
+		sv.push(7);
+		fmt::print("Pushing [420, -420, 69, -7, -69, 7]\n");
 		fmt::print("push()        : {}\n", sv.vector());
+	}
+	{
+		OK::SortedVector<int> sv {-2, 4, 2, 3, -2, 5, 69, 0, 1, -99, 923};
+		sv.push(420);
+		sv.push(-420);
+		sv.push(69);
+		sv.push(-7);
+		sv.push(-69);
+		sv.push(7);
+		fmt::print("push & pop    : {}\n", sv.vector());
+		sv.pop();
+		fmt::print("push & pop    : {}\n", sv.vector());
+		sv.pop();
+		fmt::print("push & pop    : {}\n", sv.vector());
 	}
 
 	return 0;
