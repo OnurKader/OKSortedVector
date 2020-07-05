@@ -29,6 +29,12 @@ int main()
 		fmt::print("MoveConst     : {}\n", sv.vector());
 		fmt::print("Orig. after   : {}\n", _.vector());
 	}
+	{
+		OK::SortedVector<int> sv {-2, 4, 2, 3, -2, 5, 69, 0};
+		sv.push(420);
+		sv.push(-420);
+		fmt::print("push()        : {}\n", sv.vector());
+	}
 
 	return 0;
 }
